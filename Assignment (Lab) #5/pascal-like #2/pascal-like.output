@@ -1,0 +1,471 @@
+State 32 conflicts: 1 shift/reduce
+State 34 conflicts: 2 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: begin statements end
+
+    2 statements: statement
+    3           | statement SEMICOLON statement
+
+    4 statement: if_statement
+    5          | while_statement
+    6          | assign_statement
+    7          | program
+
+    8 if_statement: if condition then statement
+    9             | if condition then statement else statement
+
+   10 while_statement: while condition do statement
+
+   11 assign_statement: ID ASSIGN expr
+
+   12 condition: expr relop expr
+
+   13 relop: LESS_THAN
+   14      | GREATER_THAN
+
+   15 expr: expr binaryOp expr
+   16     | value
+
+   17 binaryOp: PLUS
+   18         | MINUS
+
+   19 value: NUMBER
+   20      | ID
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    SEMICOLON (258) 3
+    ASSIGN (259) 11
+    LESS_THAN (260) 13
+    GREATER_THAN (261) 14
+    PLUS (262) 17
+    MINUS (263) 18
+    begin (264) 1
+    end (265) 1
+    if (266) 8 9
+    then (267) 8 9
+    else (268) 9
+    while (269) 10
+    do (270) 10
+    ID (271) 11 20
+    NUMBER (272) 19
+
+
+Nonterminals, with rules where they appear
+
+    $accept (18)
+        on left: 0
+    program (19)
+        on left: 1
+        on right: 0 7
+    statements (20)
+        on left: 2 3
+        on right: 1
+    statement (21)
+        on left: 4 5 6 7
+        on right: 2 3 8 9 10
+    if_statement (22)
+        on left: 8 9
+        on right: 4
+    while_statement (23)
+        on left: 10
+        on right: 5
+    assign_statement (24)
+        on left: 11
+        on right: 6
+    condition (25)
+        on left: 12
+        on right: 8 9 10
+    relop (26)
+        on left: 13 14
+        on right: 12
+    expr (27)
+        on left: 15 16
+        on right: 11 12 15
+    binaryOp (28)
+        on left: 17 18
+        on right: 15
+    value (29)
+        on left: 19 20
+        on right: 16
+
+
+State 0
+
+    0 $accept: • program $end
+
+    begin  shift, and go to state 1
+
+    program  go to state 2
+
+
+State 1
+
+    1 program: begin • statements end
+
+    begin  shift, and go to state 1
+    if     shift, and go to state 3
+    while  shift, and go to state 4
+    ID     shift, and go to state 5
+
+    program           go to state 6
+    statements        go to state 7
+    statement         go to state 8
+    if_statement      go to state 9
+    while_statement   go to state 10
+    assign_statement  go to state 11
+
+
+State 2
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 12
+
+
+State 3
+
+    8 if_statement: if • condition then statement
+    9             | if • condition then statement else statement
+
+    ID      shift, and go to state 13
+    NUMBER  shift, and go to state 14
+
+    condition  go to state 15
+    expr       go to state 16
+    value      go to state 17
+
+
+State 4
+
+   10 while_statement: while • condition do statement
+
+    ID      shift, and go to state 13
+    NUMBER  shift, and go to state 14
+
+    condition  go to state 18
+    expr       go to state 16
+    value      go to state 17
+
+
+State 5
+
+   11 assign_statement: ID • ASSIGN expr
+
+    ASSIGN  shift, and go to state 19
+
+
+State 6
+
+    7 statement: program •
+
+    $default  reduce using rule 7 (statement)
+
+
+State 7
+
+    1 program: begin statements • end
+
+    end  shift, and go to state 20
+
+
+State 8
+
+    2 statements: statement •
+    3           | statement • SEMICOLON statement
+
+    SEMICOLON  shift, and go to state 21
+
+    $default  reduce using rule 2 (statements)
+
+
+State 9
+
+    4 statement: if_statement •
+
+    $default  reduce using rule 4 (statement)
+
+
+State 10
+
+    5 statement: while_statement •
+
+    $default  reduce using rule 5 (statement)
+
+
+State 11
+
+    6 statement: assign_statement •
+
+    $default  reduce using rule 6 (statement)
+
+
+State 12
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 13
+
+   20 value: ID •
+
+    $default  reduce using rule 20 (value)
+
+
+State 14
+
+   19 value: NUMBER •
+
+    $default  reduce using rule 19 (value)
+
+
+State 15
+
+    8 if_statement: if condition • then statement
+    9             | if condition • then statement else statement
+
+    then  shift, and go to state 22
+
+
+State 16
+
+   12 condition: expr • relop expr
+   15 expr: expr • binaryOp expr
+
+    LESS_THAN     shift, and go to state 23
+    GREATER_THAN  shift, and go to state 24
+    PLUS          shift, and go to state 25
+    MINUS         shift, and go to state 26
+
+    relop     go to state 27
+    binaryOp  go to state 28
+
+
+State 17
+
+   16 expr: value •
+
+    $default  reduce using rule 16 (expr)
+
+
+State 18
+
+   10 while_statement: while condition • do statement
+
+    do  shift, and go to state 29
+
+
+State 19
+
+   11 assign_statement: ID ASSIGN • expr
+
+    ID      shift, and go to state 13
+    NUMBER  shift, and go to state 14
+
+    expr   go to state 30
+    value  go to state 17
+
+
+State 20
+
+    1 program: begin statements end •
+
+    $default  reduce using rule 1 (program)
+
+
+State 21
+
+    3 statements: statement SEMICOLON • statement
+
+    begin  shift, and go to state 1
+    if     shift, and go to state 3
+    while  shift, and go to state 4
+    ID     shift, and go to state 5
+
+    program           go to state 6
+    statement         go to state 31
+    if_statement      go to state 9
+    while_statement   go to state 10
+    assign_statement  go to state 11
+
+
+State 22
+
+    8 if_statement: if condition then • statement
+    9             | if condition then • statement else statement
+
+    begin  shift, and go to state 1
+    if     shift, and go to state 3
+    while  shift, and go to state 4
+    ID     shift, and go to state 5
+
+    program           go to state 6
+    statement         go to state 32
+    if_statement      go to state 9
+    while_statement   go to state 10
+    assign_statement  go to state 11
+
+
+State 23
+
+   13 relop: LESS_THAN •
+
+    $default  reduce using rule 13 (relop)
+
+
+State 24
+
+   14 relop: GREATER_THAN •
+
+    $default  reduce using rule 14 (relop)
+
+
+State 25
+
+   17 binaryOp: PLUS •
+
+    $default  reduce using rule 17 (binaryOp)
+
+
+State 26
+
+   18 binaryOp: MINUS •
+
+    $default  reduce using rule 18 (binaryOp)
+
+
+State 27
+
+   12 condition: expr relop • expr
+
+    ID      shift, and go to state 13
+    NUMBER  shift, and go to state 14
+
+    expr   go to state 33
+    value  go to state 17
+
+
+State 28
+
+   15 expr: expr binaryOp • expr
+
+    ID      shift, and go to state 13
+    NUMBER  shift, and go to state 14
+
+    expr   go to state 34
+    value  go to state 17
+
+
+State 29
+
+   10 while_statement: while condition do • statement
+
+    begin  shift, and go to state 1
+    if     shift, and go to state 3
+    while  shift, and go to state 4
+    ID     shift, and go to state 5
+
+    program           go to state 6
+    statement         go to state 35
+    if_statement      go to state 9
+    while_statement   go to state 10
+    assign_statement  go to state 11
+
+
+State 30
+
+   11 assign_statement: ID ASSIGN expr •
+   15 expr: expr • binaryOp expr
+
+    PLUS   shift, and go to state 25
+    MINUS  shift, and go to state 26
+
+    $default  reduce using rule 11 (assign_statement)
+
+    binaryOp  go to state 28
+
+
+State 31
+
+    3 statements: statement SEMICOLON statement •
+
+    $default  reduce using rule 3 (statements)
+
+
+State 32
+
+    8 if_statement: if condition then statement •
+    9             | if condition then statement • else statement
+
+    else  shift, and go to state 36
+
+    else      [reduce using rule 8 (if_statement)]
+    $default  reduce using rule 8 (if_statement)
+
+
+State 33
+
+   12 condition: expr relop expr •
+   15 expr: expr • binaryOp expr
+
+    PLUS   shift, and go to state 25
+    MINUS  shift, and go to state 26
+
+    $default  reduce using rule 12 (condition)
+
+    binaryOp  go to state 28
+
+
+State 34
+
+   15 expr: expr • binaryOp expr
+   15     | expr binaryOp expr •
+
+    PLUS   shift, and go to state 25
+    MINUS  shift, and go to state 26
+
+    PLUS      [reduce using rule 15 (expr)]
+    MINUS     [reduce using rule 15 (expr)]
+    $default  reduce using rule 15 (expr)
+
+    binaryOp  go to state 28
+
+
+State 35
+
+   10 while_statement: while condition do statement •
+
+    $default  reduce using rule 10 (while_statement)
+
+
+State 36
+
+    9 if_statement: if condition then statement else • statement
+
+    begin  shift, and go to state 1
+    if     shift, and go to state 3
+    while  shift, and go to state 4
+    ID     shift, and go to state 5
+
+    program           go to state 6
+    statement         go to state 37
+    if_statement      go to state 9
+    while_statement   go to state 10
+    assign_statement  go to state 11
+
+
+State 37
+
+    9 if_statement: if condition then statement else statement •
+
+    $default  reduce using rule 9 (if_statement)
